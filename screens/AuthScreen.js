@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View ,TextInput,TouchableOpacity, Alert} from 'react-native';
+import { StyleSheet, Text, View ,TextInput,TouchableOpacity, Alert,Modal, ScrollView, KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase';
 import db from '../config';
 
@@ -9,8 +9,13 @@ export default class AuthScreen extends React.Component{
         this.state={
             emailid:'',
             pass:'',
+            visibilty:true,
+            name:'',
+            phoneno:0,
+            address:'',
+            conpass:'',
 
-        }
+                }
     }
 
     login=async(email,pass)=>{
@@ -38,23 +43,93 @@ export default class AuthScreen extends React.Component{
      }
   }
 
-    signup=async(email,pass)=>{
-        try{  
+    signup=async(email,pass,conpass)=>{
+      if(pass!=conpass){
+        Alert.alert("password mismatched");
+      }
+        else{
+          try{  
             firebase.auth().createUserWithEmailAndPassword(email,pass).then((response)=>{
-                console.log("jkl;");
+                db.collection('UserDetails').add({
+                  'phone no':this.state.phoneno,
+                  'address':this.state.address,
+                  'emailid':this.state.emailid,
+                  'name':this.state.name,
+                  'password':this.state.conpass,
+
+                })
             return  Alert.alert("user created succesfully", "My Alert Msg", [ { text: "Cancel", onPress: () => console.log("Cancel Pressed"), style: "cancel" }, { text: "OK", onPress: () => console.log("OK Pressed") } ] );
         })
     }
       catch(error){
-          console.log("asfd");
+          //console.log("asfd");
           return Alert.alert( error.message+","+error.code, "My Alert Msg", [ { text: "Cancel", onPress: () => console.log("Cancel Pressed"), style: "cancel" }, { text: "OK", onPress: () => console.log("OK Pressed") } ] );
-      }
-
+      } 
+        }
     }
+
+    displayForm=()=>{
+      return(
+        <View>
+        <Modal
+          visible={this.state.visibilty}
+          animationType="slide"
+          transparent={true}
+        >
+          <ScrollView>
+            <KeyboardAvoidingView>
+            <TextInput
+          //style={styles.inputBox}
+           placeholder="Enter your name: "
+           onChangeText={(text)=>{this.setState({name:text})}}/>
+
+            <TextInput
+          //style={styles.inputBox}
+           placeholder="email ID"
+           keyboardType="email-address"
+           onChangeText={(text)=>{this.setState({emailid:text})}}/>
+
+            <TextInput
+          //style={styles.inputBox}
+           placeholder="Your Phone no: "
+           onChangeText={(text)=>{this.setState({phoneno:text})}}/>
+
+            <TextInput
+          //style={styles.inputBox}
+           placeholder="Your Address: "
+           onChangeText={(text)=>{this.setState({address:text})}}/>
+           <TextInput
+          //style={styles.inputBox}
+           placeholder="password"
+           secureTextEntry={true}
+           onChangeText={(text)=>{this.setState({pass:text})}}/>
+              <TextInput
+          //style={styles.inputBox}
+           placeholder="confirm password"
+           secureTextEntry={true}
+           onChangeText={(text)=>{this.setState({conpass:text})}}/>
+
+        <TouchableOpacity
+         onPress={()=>{
+            this.signup(this.state.emailid,this.state.pass,this.state.conpass)
+            this.setState({visibilty:false});
+           }}>        
+            <Text>Submit</Text>
+
+        </TouchableOpacity>
+
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </Modal>
+        </View>
+      );
+    }
+
     render(){
         return(
             <View>
-              <TextInput
+             {/* {this.displayForm()} */}
+             <TextInput
           //style={styles.inputBox}
            placeholder="email ID"
            keyboardType="email-address"
@@ -76,10 +151,15 @@ export default class AuthScreen extends React.Component{
                 
         <TouchableOpacity
          onPress={()=>{
-            this.signup(this.state.emailid,this.state.pass)
+          //  this.setState({
+          //    visibilty:true,
+
+          //  });
+            this.displayForm()
            }}>        
             <Text>SignUp</Text>
         </TouchableOpacity>
+
             </View>
         )
     }
