@@ -22,11 +22,11 @@ export default class AuthScreen extends React.Component{
         if(email && pass){
              try{
         const data = await  firebase.auth().signInWithEmailAndPassword(email,pass).then((Response)=>{
-            return console.log("asdf");//Alert.alert( "logged in", "My Alert Msg", [ { text: "Cancel", onPress: () => console.log("Cancel Pressed"), style: "cancel" }, { text: "OK", onPress: () => console.log("OK Pressed") } ] );
+            return this.props.navigation.navigate('RequestScreen');//Alert.alert( "logged in", "My Alert Msg", [ { text: "Cancel", onPress: () => console.log("Cancel Pressed"), style: "cancel" }, { text: "OK", onPress: () => console.log("OK Pressed") } ] );
         });
                 
           if(data){
-             //this.props.navigation.navigate('Transaction');
+             this.props.navigation.navigate('RequestScreen');
           } 
        }catch(error){
          if(error.code=='auth/user-not-found'){
@@ -50,6 +50,7 @@ export default class AuthScreen extends React.Component{
         else{
           try{  
             firebase.auth().createUserWithEmailAndPassword(email,pass).then((response)=>{
+              
                 db.collection('UserDetails').add({
                   'phone no':this.state.phoneno,
                   'address':this.state.address,
@@ -72,7 +73,7 @@ export default class AuthScreen extends React.Component{
       return(
         <View>
         <Modal
-          visible={this.state.visibilty}
+          visible={true}
           animationType="slide"
           transparent={true}
         >
