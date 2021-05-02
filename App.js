@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View,Image } from 'react-native';
 import { createAppContainer,createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
+import { createDrawerNavigator,DrawerItems } from '@react-navigation/drawer';
 
 import AuthScreen from './screens/AuthScreen';
 import RequestScreen from './screens/RequestScreen';
 import DonationScreen from './screens/DonationScreen';
-
+import Drawer from './screens/Drawer';
 export default class App extends React.Component{
   render(){
     return(
@@ -46,7 +46,10 @@ const TabNavigator = createBottomTabNavigator({
   })
 }
 );
-const switchNavigator=createSwitchNavigator({LoginScreen:{screen:AuthScreen},Others:{screen:TabNavigator}})
+
+const AppDrawerNavigator=createDrawerNavigator({SideDrawer:{screen:TabNavigator},},{contentComponent:Drawer},{initialRouteName:'SideDrawer'})
+
+const switchNavigator=createSwitchNavigator({LoginScreen:{screen:AuthScreen},Drawer:{screen:AppDrawerNavigator}})
 
 const AppContainer =  createAppContainer(switchNavigator);
 
