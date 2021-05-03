@@ -52,14 +52,14 @@ export default class AuthScreen extends React.Component{
             firebase.auth().createUserWithEmailAndPassword(email,pass).then((response)=>{
               
                 db.collection('UserDetails').add({
-                  'phone no':this.state.phoneno,
+                  'phone_no':this.state.phoneno,
                   'address':this.state.address,
                   'emailid':this.state.emailid,
                   'name':this.state.name,
                   'password':this.state.conpass,
-
+                  'userid':Math.random().toString(36).substring(10),
                 })
-            return  Alert.alert("user created succesfully", "My Alert Msg", [ { text: "Cancel", onPress: () => console.log("Cancel Pressed"), style: "cancel" }, { text: "OK", onPress: () => console.log("OK Pressed") } ] );
+            return this.props.navigation.navigate('DonationScreen');
         })
     }
       catch(error){
@@ -129,7 +129,7 @@ export default class AuthScreen extends React.Component{
     render(){
         return(
             <View>
-             {/* {this.displayForm()} */}
+             {this.displayForm()}
              <TextInput
           //style={styles.inputBox}
            placeholder="email ID"
@@ -156,7 +156,7 @@ export default class AuthScreen extends React.Component{
           //    visibilty:true,
 
           //  });
-            this.displayForm()
+            //this.displayForm()
            }}>        
             <Text>SignUp</Text>
         </TouchableOpacity>

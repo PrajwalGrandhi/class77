@@ -34,10 +34,10 @@ export default class DonationScreen extends React.Component{
                 <FlatList  data={this.state.allRequests}
          renderItem={({item})=>(
             <View style={{backgroundColor:'red',borderWidth:10,marginTop:10}}>
-                  <Text>{"Book Name"+item.bookname}</Text>
-                  <Text>{"Region"+item.region} </Text>
-                  <Text>{"email"+item.emailid}</Text>
-                  <Text>{"TagedUsers"+item.tagusers}</Text>
+                  <Text>{"BookName: "+item.bookname}</Text>
+                  <Text>{"Region: "+item.region} </Text>
+                  <Text>{"EmailID: "+item.emailid}</Text>
+                  <Text>{"TagedUsers: "+item.tagusers}</Text>
              </View>
          )} keyExtractor={(item,index)=>{
            index.toString();
