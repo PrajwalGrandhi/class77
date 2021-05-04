@@ -3,6 +3,7 @@ import { StyleSheet, Text, View ,TextInput,TouchableOpacity, Alert,Modal, Scroll
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
 import firebase from 'firebase';
 import db from '../config';
+
 export default class Drawer extends React.Component{
     render(){
         return(

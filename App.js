@@ -3,12 +3,14 @@ import { StyleSheet, Text, View,Image } from 'react-native';
 import { createAppContainer,createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import AuthScreen from './screens/AuthScreen';
 import RequestScreen from './screens/RequestScreen';
 import DonationScreen from './screens/DonationScreen';
 import Drawer from './screens/Drawer';
 import SettingScreen from './screens/SettingsScreen';
+import RequestDetails from './screens/RequesterDetails';
 
 export default class App extends React.Component{
   render(){
@@ -48,6 +50,7 @@ const TabNavigator = createBottomTabNavigator({
   })
 }
 );
+const AppStackNavigator=createStackNavigator({DonationScreen:{screen:DonationScreen},RequestDetailsScreen:{screen:RequestDetails}},{initialRouteName:'DonationScreen'});
 
 const AppDrawerNavigator=createDrawerNavigator({SideDrawer:{screen:TabNavigator},SettingScreen:{screen:SettingScreen}},{contentComponent:Drawer},{initialRouteName:'SideDrawer'})
 
