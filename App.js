@@ -11,6 +11,7 @@ import DonationScreen from './screens/DonationScreen';
 import Drawer from './screens/Drawer';
 import SettingScreen from './screens/SettingsScreen';
 import RequestDetails from './screens/RequesterDetails';
+import MyDonationScreen from './screens/MyDonationScreen';
 
 export default class App extends React.Component{
   render(){
@@ -52,7 +53,7 @@ const TabNavigator = createBottomTabNavigator({
 );
 const AppStackNavigator=createStackNavigator({DonationScreen:{screen:DonationScreen},RequestDetailsScreen:{screen:RequestDetails}},{initialRouteName:'DonationScreen'});
 
-const AppDrawerNavigator=createDrawerNavigator({SideDrawer:{screen:TabNavigator},SettingScreen:{screen:SettingScreen}},{contentComponent:Drawer},{initialRouteName:'SideDrawer'})
+const AppDrawerNavigator=createDrawerNavigator({SideDrawer:{screen:TabNavigator},SettingScreen:{screen:SettingScreen},MyDonationScreen:{screen:MyDonationScreen}},{contentComponent:Drawer},{initialRouteName:'SideDrawer'})
 
 const switchNavigator=createSwitchNavigator({LoginScreen:{screen:AuthScreen},Drawer:{screen:AppDrawerNavigator}})
 
