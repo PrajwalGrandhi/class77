@@ -4,15 +4,16 @@ import firebase from 'firebase';
 import db from '../config';
 import {Card} from 'react-native-elements';
 export default class RequestDetails extends React.Component{
-    constructor(){
+    constructor(props){
+        super(props);
         this.state={
             details:this.props.navigation.getParam('details'),
-            userid:this.props.navigation.getParam('details')[emailid],
+            userid:this.props.navigation.getParam('details')['emailid'],
             userphone:0,
             username:'',
             useraddress:'',
-            bookname:this.props.navigation.getParam('details')[bookname],
-            tagusers:this.props.navigation.getParam('details')[tagusers],
+            bookname:this.props.navigation.getParam('details')['bookname'],
+            tagusers:this.props.navigation.getParam('details')['tagusers'],
             donorid:firebase.auth().currentUser.email,
 
         };
@@ -23,7 +24,7 @@ this.getUserDetails();
     }
 
     getUserDetails=()=>{
-db.collection('UserDetails').where('emailid',"==",userid).get().then(snapshot=>{snapshot.forEach(doc=>{
+db.collection('UserDetails').where('emailid',"==",this.state.userid).get().then(snapshot=>{snapshot.forEach(doc=>{
     this.setState({
         userphone:doc.data().phone_no,
         username:doc.data().name,
@@ -38,19 +39,37 @@ bookname:this.state.bookname,
 donorid:this.state.donorid,
 userid:this.state.userid,
 status:"donor interested",
-
+readstatus:'unread',
 })
     }
 
     addNotification=()=>{
         db.collection('Notifications').add({
             userid:this.state.userid,
+            readstatus:'unread',
+            status:"donor interested",
             donorid:this.state.donorid,
             bookname:this.state.bookname,
             date:firebase.firestore.FieldValue.serverTimestamp()
         })
     }
 
+    sendNotificaition=()=>{
+db.collection('Notifications').where('donorid','==',this.state.donorid).where('userid','==',this.state.userid).onSnapshot((snapshot)=>{
+    snapshot.forEach((doc)=>{
+        var message;
+        if(status=="book sent"){
+message=this.state.donorid+"sent you the book."
+        }else{
+message=this.state.donorid+"has interest."
+        }
+db.collection('Notification').doc(doc.id).update({
+    status:message,
+})
+    })
+    
+})
+    }
     render(){
         return(
             <View>
@@ -76,6 +95,7 @@ status:"donor interested",
                                 <TouchableOpacity onPress={()=>{
                                     this.updateTransaction()
                                     this.addNotification()
+                                    this.sendNotificaition()
                                     this.props.navigation.navigate('DonationScreen')
                                     }}>
                                     <Text>Donate</Text>
