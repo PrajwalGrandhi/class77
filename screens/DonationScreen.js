@@ -43,7 +43,7 @@ export default class DonationScreen extends React.Component{
                   }}>
                       <Text>donate</Text>
                       {
-                          console.log(item)
+//                          console.log(item)
                       }
                   </TouchableOpacity>
              </View>

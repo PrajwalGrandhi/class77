@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View ,TextInput,TouchableOpacity, Alert,Modal, ScrollView, KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase';
 import db from '../config';
+import Header1 from '../components/Header';
+import {GoogleBookSearch,BookSearch} from 'react-native-google-books';
 
 export default class RequestScreen extends React.Component{
     constructor(){
@@ -31,9 +33,16 @@ export default class RequestScreen extends React.Component{
         });
     }
 
+    componentDidMount(){
+// var abc=BookSearch.searchbook("wings of fire","AIzaSyC3etQX3xj_JILe3mHmE_KpFXrux1v-GDg");
+// console.log(abc);
+
+    }
+
     render(){
         return(
             <View>
+                <Header1 navigation={this.props.navigation}/>
                 <KeyboardAvoidingView behavior="padding" enabled>
                 <Text style={styles.header}>Request</Text>
         <TextInput
@@ -56,6 +65,11 @@ export default class RequestScreen extends React.Component{
             <Text>SUBMIT</Text>
         </TouchableOpacity>
             </KeyboardAvoidingView>
+
+            {/* <GoogleBookSearch
+     apikey={'AIzaSyC3etQX3xj_JILe3mHmE_KpFXrux1v-GDg'}
+     onResultPress={(book)=> console.log(book)}
+  /> */}
             </View>
         )
     }

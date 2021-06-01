@@ -41,7 +41,7 @@ export default class SettingScreen extends React.Component{
         db.collection('UserDetails').doc(this.state.userid).update({
                 "emailid":this.state.emailid,
                 "name":this.state.name,
-                "phone_no":this.state.phoneno,
+              //  "phone_no":this.state.phoneno,
                 "password":this.state.pass,
                 "address":this.state.address,
                 
@@ -71,7 +71,7 @@ export default class SettingScreen extends React.Component{
           //style={styles.inputBox}
            placeholder={this.state.phoneno}
            keyboardType={"numeric"}
-           onChangeText={(text)=>{this.setState({phoneno:text})}}/>
+           onChangeText={(text)=>{this.setState({phoneno:text})}}/> 
 
             <TextInput
           //style={styles.inputBox}

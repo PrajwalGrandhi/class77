@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View ,TextInput,TouchableOpacity, Alert,Modal, ScrollView, KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase';
 import db from '../config';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export default class AuthScreen extends React.Component{
     constructor(){
@@ -73,7 +74,7 @@ export default class AuthScreen extends React.Component{
       return(
         <View>
         <Modal
-          visible={true}
+          visible={this.state.visibilty}
           animationType="slide"
           transparent={true}
         >
@@ -119,6 +120,11 @@ export default class AuthScreen extends React.Component{
 
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={()=>{
+          this.setState({visibilty:false})
+        }}>
+          <Text>CANCEL</Text>
+        </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
         </Modal>
@@ -128,16 +134,17 @@ export default class AuthScreen extends React.Component{
 
     render(){
         return(
-            <View>
+            <View style={styles.welcome}>
              {this.displayForm()}
              <TextInput
-          //style={styles.inputBox}
+          
+           style={styles.instructions}
            placeholder="email ID"
            keyboardType="email-address"
            onChangeText={(text)=>{this.setState({emailid:text})}}/>
 
            <TextInput
-          //style={styles.inputBox}
+          style={styles.instructions}
            placeholder="password"
            secureTextEntry={true}
            onChangeText={(text)=>{this.setState({pass:text})}}/>
@@ -165,3 +172,25 @@ export default class AuthScreen extends React.Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+  welcome: {
+    fontSize: RFValue(24, 580),
+    textAlign: "center",
+    margin: 10,
+  },
+  instructions: {
+    textAlign: "center",
+    alignSelf:'center',
+    color: "#333333",
+    marginBottom: RFValue(5),
+    fontSize: RFPercentage(2),
+    width:200,
+    borderColor:'black',
+    borderRadius:RFValue(100)
+  },
+});
+
+
+
+//modal avatar Booksapi 

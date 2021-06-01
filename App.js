@@ -13,11 +13,15 @@ import SettingScreen from './screens/SettingsScreen';
 import RequestDetails from './screens/RequesterDetails';
 import MyDonationScreen from './screens/MyDonationScreen';
 import NotificationScreen from './screens/NotificationScreen'
+import Header1 from './components/Header'
 
 export default class App extends React.Component{
+
   render(){
     return(
-          <AppContainer/>
+      
+<AppContainer/>
+      
     );
   }
 }
@@ -59,12 +63,3 @@ const AppDrawerNavigator=createDrawerNavigator({SideDrawer:{screen:TabNavigator}
 const switchNavigator=createSwitchNavigator({LoginScreen:{screen:AuthScreen},Drawer:{screen:AppDrawerNavigator},StackNavigator:{screen:AppStackNavigator}})
 
 const AppContainer =  createAppContainer(switchNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
